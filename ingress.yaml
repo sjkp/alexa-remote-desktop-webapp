@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: alexaremotedesktop-ingress
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - alexaremotedesktop.com
+    secretName: tls-secret-alexaremotedesktop
+  rules:
+  - host: alexaremotedesktop.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: alexaremotedesktop
+          servicePort: 8022   

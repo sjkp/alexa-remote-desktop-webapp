@@ -1,0 +1,28 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: alexaremotedesktop
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alexaremotedesktop
+    spec:
+      containers:
+      - name: alexaremotedesktop
+        image: sjkpdk.azurecr.io/alexa-remote-desktop-webapp:latest
+        ports:
+        - containerPort: 8022          
+      imagePullSecrets:
+      - name: sjkpregistery
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alexaremotedesktop
+spec:
+  ports:
+  - port: 8022
+  selector:
+    app: alexaremotedesktop
